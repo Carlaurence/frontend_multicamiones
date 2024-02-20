@@ -31,7 +31,6 @@ import UpdateCargoBodyType from './navigation/UpdateCargoBodyType';
 import Year from './navigation/Year';
 //import YearsList from './navigation/YearList';
 import Pruebas from './navigation/Pruebas';
-import LoanSimulator from './navigation/LoanSimulator';
 import AddImages from './navigation/Add_Images';
 import CreateFinancialCorp from "./navigation/Create_FinancialCorp"
 import FinancialCorpList from './navigation/FinancialCorpList';
@@ -48,13 +47,10 @@ function App() {
         <Route path='/sign_up' exact element={<SignUp/>}/>
         <Route path='/admin' exact element={<Admin/>}/>
         <Route path='/create_product/:id' exact element={<Product/>}/>
-        
         <Route path='/trucksAll' exact element={<ShowAllTrucks/>}/>
         <Route path='/category/:id' exact element={<TrucksCategories/>}/>
-
-        <Route path='/info_product' exact element={<InfoProduct/>}/>
+        <Route path='/info_product/:id' exact element={<InfoProduct/>}/>
         <Route path='/make_offer' exact element={<MakeOffer/>}/>
-
         <Route path='*' exact element={<Error404/>}/>
         <Route path='/location' exact element={<Location/>}/>
         <Route path='/advertisements' exact element={<Advertisements/>}/>
@@ -74,13 +70,12 @@ function App() {
         <Route path='/update_cargobodytype/:id' exact element={<UpdateCargoBodyType/>}/>
         <Route path='/years' exact element={<Year/>}/>
         {/*<Route path='/years_list' exact element={<YearsList/>}/>*/}
-        <Route path='/loan_simulator' exact element={<LoanSimulator/>}/>
         <Route path='/add_images/:id' exact element={<AddImages/>}/>
         <Route path='/create_financialcorp' exact element={<CreateFinancialCorp/>}/>
         <Route path='/financialcorp_list' exact element={<FinancialCorpList/>}/>
         <Route path='/update_financialcorp/:id' exact element={<UpdateFinancialCorp/>}/>
         
-        <Route path='/pruebas/:id' exact element={<Pruebas/>}/>
+        <Route path='/pruebas' exact element={<Pruebas/>}/>
         
       
       </Routes>

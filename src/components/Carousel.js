@@ -47,7 +47,7 @@ const Carousel = (props) => {
             {/*ESTE DIV CONTIENE LA IMAGEN CAROUSEL props.images[0].secure_url*/}
             <div style={{  aspectRatio:4/3, backgroundImage: `url(${props.images[currentIndex].secure_url})` }} className='relative flex items-end bg-cover bg-center bg-no-repeat rounded-md bg-gray-900'>
 
-                <div onClick={() => navigate(`/pruebas/${props.product._id}`) } className='absolute top-0 left-0 right-0 m-auto flex w-[75%] h-[90%] bg-transparent cursor-pointer'></div>
+                <div onClick={() => navigate(`/info_product/${props.product._id}`) } className='absolute top-0 left-0 right-0 m-auto flex w-[75%] h-[90%] bg-transparent cursor-pointer'></div>
 
                 {/*ESTE DIV CONTIENE UNICAMENTE LOS LATERAL ARROWS Y LOS DOTS A UNA ALTURA DEL 50% DEL DIV DE LA IMAGEN*/}
                 <div className='flex flex-col justify-between h-[60%] w-full'>
