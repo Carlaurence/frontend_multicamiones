@@ -1,0 +1,36 @@
+
+.slick-prev:before,
+.slick-next:before
+{
+    color: transparent;
+}
+
+.slick-dots li button:before
+{
+    color: transparent;
+}
+.slick-dots li.slick-active button:before
+{
+    color: transparent;
+}
+
+/*ESTILOS CAROUSEL TRUCK*/
+.slick-thumb
+{
+    display: flex !important;
+    flex-direction: row;
+    bottom: 0px;
+    background-color: black;
+}
+
+.slick-thumb > li 
+{
+    width: 80px;
+}
+
+.slick-dots li
+{
+    display: flex;
+    margin: 0px;
+    height: auto;
+}
