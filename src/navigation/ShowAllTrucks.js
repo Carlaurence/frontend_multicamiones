@@ -70,8 +70,10 @@ const ShowAllTrucks = () => {
                                         <span className="flex items-center gap-2"><IoIosSpeedometer style={{color: '#424949', fontSize:'15px'}} />{" "+decimalFormatter.format(product.odometer)+" Kms"}</span>
                                         <span className="flex items-center gap-2"><FaSackDollar style={{color: '#424949', fontSize:'15px'}} />{formatterPesoCOP.format(product.price)}</span>
                                     </div>
+
+                                    {/**WHATSAPP BUTTOM*/}
                                     <div className="flex justify-center items-center w-[25%]">
-                                        <Link target="_blank" to={`https://wa.me/573187825631?text=${process.env.REACT_APP_HOST_URL}/info_product/${product._id}`}><FaWhatsappSquare style={{color: '#25D366', fontSize:'40px'}} /></Link>
+                                        <Link target="_blank" to={`https://wa.me/${process.env.REACT_APP_WHATSAPP_LINK}?text=${process.env.REACT_APP_HOST_URL}/info_product/${product._id}`}><FaWhatsappSquare style={{color: '#25D366', fontSize:'40px'}} /></Link>
                                     </div>
                                 </div>
                                 <div className="flex justify-center items-center mb-3">

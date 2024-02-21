@@ -118,7 +118,7 @@ const InfoProduct = () => {
                                     {/**BOTON WHATSAPP */}
                                     {/**Estoy%20interesado%20en%20el%20camion */}
                                     <div className="button flex items-center justify-center w-full">
-                                        <Link type="button" target="_blank" to={`https://wa.me/573187825631?text=${process.env.REACT_APP_HOST_URL+location.pathname}`} style={{ background: '#25d366' }} className={`flex justify-center items-center w-[260px] h-7 text-sm md:text-xs lg:text-sm font-semibold text-white rounded-md uppercase`}><FaWhatsapp style={{ color: 'white', fontSize: '20px' }} />&nbsp;Contactar un Asesor</Link>
+                                        <Link type="button" target="_blank" to={`https://wa.me/${process.env.REACT_APP_WHATSAPP_LINK}?text=${process.env.REACT_APP_HOST_URL+location.pathname}`} style={{ background: '#25d366' }} className={`flex justify-center items-center w-[260px] h-7 text-sm md:text-xs lg:text-sm font-semibold text-white rounded-md uppercase`}><FaWhatsapp style={{ color: 'white', fontSize: '20px' }} />&nbsp;Contactar un Asesor</Link>
                                     </div>
 
                                 </div>
