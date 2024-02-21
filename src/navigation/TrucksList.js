@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
-import Carousel from "../components/Carousel";
+import CarouselUpdateTruck from "../components/CarouselUpdateTruck";
 import swal from "sweetalert";
 import crud from "../backEndConnection/crud";
 
@@ -116,7 +116,7 @@ const TrucksList = () => {
                                 {/*EL CAROUSEL AL LADO IZQUIERDO*/}
                                 <div className='rounded-md w-[165px]'>
                                     {/*RELACION DE ASPECTO 5:4 => 5 UNID ANCHO X 4 DE ALTO*/}
-                                    <Carousel images={product.images}/>
+                                    <CarouselUpdateTruck images={product.images}/>
                                 </div>
                                 {/*LA INFORMACION EN EL MEDIO*/}
                                 <div className="overflow-hidden truncate flex flex-col justify-center gap-1 text-[13px] w-[200px]">

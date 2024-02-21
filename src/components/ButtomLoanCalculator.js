@@ -6,7 +6,7 @@ const ButtomLoanCalculator = ( props ) => {
     const navigate = useNavigate() //SE DEBE UTILIZAR PARA RE-DIRECCIONAR PAGINAS WEB
 
     const buttomHandler = () => {
-        navigate("/loan_simulator");
+        navigate(props.url);
     }
 
     return (

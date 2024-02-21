@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import crud from "../backEndConnection/crud";
 import Carousel from "../components/Carousel";
@@ -70,11 +71,11 @@ const ShowAllTrucks = () => {
                                         <span className="flex items-center gap-2"><FaSackDollar style={{color: '#424949', fontSize:'15px'}} />{formatterPesoCOP.format(product.price)}</span>
                                     </div>
                                     <div className="flex justify-center items-center w-[25%]">
-                                        <Link target="_blank" to={`https://wa.me/573187825631?text=Estoy%20interesado%20en%20el%20camion`}><FaWhatsappSquare style={{color: '#25D366', fontSize:'40px'}} /></Link>
+                                        <Link target="_blank" to={`https://wa.me/573187825631?text=${process.env.REACT_APP_HOST_URL}/info_product/${product._id}`}><FaWhatsappSquare style={{color: '#25D366', fontSize:'40px'}} /></Link>
                                     </div>
                                 </div>
                                 <div className="flex justify-center items-center mb-3">
-                                    <ButtomLoanCalculator height ={"25px"} width ={"320px"}/>
+                                    <ButtomLoanCalculator url={`/info_product/${product._id}`} height ={"25px"} width ={"320px"}/>
                                 </div>
                             </div>
                         </div>

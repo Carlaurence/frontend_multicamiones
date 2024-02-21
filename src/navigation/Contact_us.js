@@ -16,6 +16,8 @@ import { useForm, ValidationError } from '@formspree/react';//npm install @forms
 
 const Contact_us = () => {
 
+    const navigate = useNavigate();
+
     /**OPCIONES DE TIPO DE DOCUMENTO */
     const idType = ['Cedula de Ciudadania', 'Cedula de Extranjeria', 'Numero de Pasaporte', 'Numero de Licencia']
     /**OPCIONES DE ASUNTO */
@@ -27,15 +29,16 @@ const Contact_us = () => {
     const onChangePhoneNummber = (value) => {
         setPhoneNumber(value)
     }
-    const [state, handleSubmit] = useForm(process.env.REACT_APP_USEFORM);
 
-    const navigate = useNavigate();
+    const [state, handleSubmit] = useForm(process.env.REACT_APP_USEFORM);
 
     if (state.succeeded) {
         navigate('/')
         swal("success", "Gracias por contactarnos. Estaremos en contacto con usted, tan pronto como sea posible", "success");
         //<p>Thanks for joining!</p>;
     }
+
+    //const onChange = () => {}
 
     return (
         <div className="overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white">
@@ -65,7 +68,7 @@ const Contact_us = () => {
                                 name="name"
                                 //value={name}
                                 placeholder="Nombres"
-                            //onChange={onChange}
+                                //onChange={onChange}
                             >
                             </input>
 
@@ -75,7 +78,7 @@ const Contact_us = () => {
                                 name="lastname"
                                 //value={name}
                                 placeholder="Apellidos"
-                            //onChange={onChange}
+                                //onChange={onChange}
                             >
                             </input>
 
@@ -87,7 +90,7 @@ const Contact_us = () => {
                                 placeholder="Seleccione Tipo de Documento"
                                 required
                                 defaultValue={'DefaultValue'}
-                            //onChange={onChange}
+                                //onChange={onChange}
                             >
                                 <option value="DefaultValue" disabled >Seleccione Tipo de Documento...</option>
                                         {
@@ -103,7 +106,7 @@ const Contact_us = () => {
                                 name="idnumber"
                                 //value={name}
                                 placeholder="Numero de Documento"
-                            //onChange={onChange}
+                                //onChange={onChange}
                             >
                             </input>
 
@@ -128,7 +131,7 @@ const Contact_us = () => {
                                 //value={email}
                                 placeholder="Correo Electronico"
                                 required
-                            //onChange={onChange}
+                                //onChange={onChange}
                             >
                             </input>
 
@@ -142,7 +145,7 @@ const Contact_us = () => {
                                     //value={subject}
                                     placeholder="Seleccione Asunto"
                                     defaultValue={'DefaultValue'}
-                                //onChange={onChange}
+                                    //onChange={onChange}
                                 >
                                     <option value="DefaultValue" disabled >Seleccione el Asunto...</option>
                                         {
@@ -159,7 +162,7 @@ const Contact_us = () => {
                                     //value={message}
                                     rows={4}
                                     placeholder="Escriba su mensaje en este area"
-                                //onChange={onChange}
+                                    //onChange={onChange}
                                 ></textarea>
 
                                 <ValidationError prefix="Message" field="message" errors={state.errors} />
@@ -174,6 +177,7 @@ const Contact_us = () => {
                                         type="radio"
                                         id="treatmentOfPersonalInformationPolicy"
                                         name="treatmentOfPersonalInformationPolicy"
+                                        //onChange={onChange}
                                         onClick={()=> setActivate(true)}>
 
                                     </input>
