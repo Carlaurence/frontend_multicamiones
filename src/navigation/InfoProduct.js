@@ -55,13 +55,13 @@ const InfoProduct = () => {
         <div className="overflow-hidden flex flex-col bg-gradient-to-r from-black via-gray-400 to to-white">
             <Navbar />
 
-            <div className="flex flex-col md:min-h-screen">
+            <div className="flex flex-col min-h-screen">
 
 
                 {truck && (
 
                     /*PANTALLA MD: Y LG:*/
-                    <div className="flex flex-col gap-4 w-full md:min-h-screen mt-32 pl-2 pr-2 md:pl-10 md:pr-10">
+                    <div className="flex flex-col gap-4 w-full min-h-screen mt-32 pl-2 pr-2 md:pl-10 md:pr-10">
 
                         {/**DIV SUPERIOR*/}
                         <div className="flex h-[8vh] md:h-[10vh] p-2 w-full mt-4 bg-slate-200 border-[2px] border-white text-[16px] md:text-[22px] text-red-800 font-bold">
