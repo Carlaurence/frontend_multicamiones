@@ -17,7 +17,8 @@ const InfoProduct = () => {
     const { id } = useParams();
     const location = useLocation();/**CONSEGUIR URL CON location.pathname*/
     const navigate = useNavigate();
-    console.log(process.env.REACT_APP_HOST_URL+location.pathname)
+    //console.log(process.env.REACT_APP_HOST_URL)
+    //console.log(location.pathname)
 
     //FUNCION PARA DAR FORMATO PESOS COP A LOS VALORES NUMERICOS
     const formatterPesoCOP = new Intl.NumberFormat('es-CO', {
@@ -113,9 +114,11 @@ const InfoProduct = () => {
                                     <div className="flex items-center justify-center w-full">
                                         <button onClick={() => navigate(`/contact_us`)} className={`w-[260px] h-7 text-sm md:text-xs lg:text-sm font-semibold text-white rounded-md bg-blue-700 hover:bg-blue-800 hover:text-gray-400 active:bg-blue-700 active:text-white uppercase`}>Hacer un Oferta</button>
                                     </div>
+
+                                    {/**BOTON WHATSAPP */}
                                     {/**Estoy%20interesado%20en%20el%20camion */}
                                     <div className="button flex items-center justify-center w-full">
-                                        <Link type="button" target="_blank" to={`https://wa.me/573187825631?text=${process.env.REACT_APP_HOST_URL}/${location.pathname}`} style={{ background: '#25d366' }} className={`flex justify-center items-center w-[260px] h-7 text-sm md:text-xs lg:text-sm font-semibold text-white rounded-md uppercase`}><FaWhatsapp style={{ color: 'white', fontSize: '20px' }} />&nbsp;Contactar un Asesor</Link>
+                                        <Link type="button" target="_blank" to={`https://wa.me/573187825631?text=${process.env.REACT_APP_HOST_URL+location.pathname}`} style={{ background: '#25d366' }} className={`flex justify-center items-center w-[260px] h-7 text-sm md:text-xs lg:text-sm font-semibold text-white rounded-md uppercase`}><FaWhatsapp style={{ color: 'white', fontSize: '20px' }} />&nbsp;Contactar un Asesor</Link>
                                     </div>
 
                                 </div>
