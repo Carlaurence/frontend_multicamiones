@@ -38,7 +38,7 @@ const About_us = () => {
                             <h1 className="uppercase text-red-900 text-[23px] font-bold">De Occidente S.A.S</h1>
                         </div>
 
-                        <div className="flex text-justify p-5 font-sans text-[14px]" style={{ color: "#444444" }}>
+                        <div className="flex text-justify p-5 font-sans text-base md:text-[14px]" style={{ color: "#444444" }}>
                             <p>Somos el primer y único centro especializado en comercialización de vehículos nuevos
                                 y usados, ofreciendo un amplio portafolio de Microbuses – Busetas – Camiones – Taxis –
                                 Nuevos y Usados en toda el mercado. Contamos con un amplio inventario de vehículos que
@@ -55,7 +55,7 @@ const About_us = () => {
                         <div className="flex flex-col justify-center items-center w-auto">
                             <SlTarget className="text-[45px] text-red-900 mb-4" />
                             <h1 className="text-red-900 text-[30px]">Misión</h1>
-                            <div className="flex text-justify p-5 font-sans text-[14px]" style={{ color: "#444444" }}>
+                            <div className="flex text-justify p-5 font-sans text-base md:text-[14px]" style={{ color: "#444444" }}>
                                 <p>
                                     Ser elegida como la Empresa N° 1 en Comercialización de vehículos nuevos y usados
                                     de servicio público en la ciudad de Cali, optimizando el tiempo para el
@@ -68,7 +68,7 @@ const About_us = () => {
                         <div className="flex flex-col justify-center items-center w-auto">
                             <GiEyeTarget className="text-[48px] text-red-900 mb-4" />
                             <h1 className="text-red-900 text-[30px] ">Visión</h1>
-                            <div className="flex text-justify p-5 font-sans text-[14px]" style={{ color: "#444444" }}>
+                            <div className="flex text-justify p-5 font-sans text-base md:text-[14px]" style={{ color: "#444444" }}>
                                 <p>
                                     Ser una empresa líder en comercialización de vehículos de servicio público
                                     nuevos y usados haciendo uso del amplio conocimiento en el gremio del

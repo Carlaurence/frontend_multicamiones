@@ -48,15 +48,6 @@ const Navbar = () => {
         <div className="fixed flex bg-white min-h-[105px] w-screen p-2 z-20 shadow-lg shadow-red-600">
             <div className="flex items-center justify-between bg-red-600 shadow-lg shadow-white w-full">
 
-            {/*"LOGO Multicomerciales"
-            <div className="md:w-auto w-[95%] flex justify-between items-center">
-                <img src='https://res.cloudinary.com/depcjbb7q/image/upload/v1682951763/logo-header_akjf4k.png' alt='logo Multicomerciales' className='w-52 invert brightness-0 md:w-52 lg:w-56'></img>
-                <div className="text-3xl md:hidden text-white" onClick={() => setOpen(!open)}>
-                    <ion-icon name={`${open ? "close" : "list"}`}></ion-icon>
-                </div>
-            </div>
-            */}
-
             {/*LOGO MULTICAMIONES*/}
             <div className="relative overflow-hidden w-[45vw] md:w-[28vw] lg:w-[30vw] h-[105px] skew-x-[45deg] bg-white flex justify-between items-center ">
 
