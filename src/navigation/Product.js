@@ -249,8 +249,9 @@ const Product = () => {//AQUI SE CREA UN PRODUCTO NUEVO CON SU RESPECTIVO ID DE 
                 swal("ERROR", "Accion Invalida\nNo hay token\nVuelva a loguearse ", "error");
                 navigate("/")
             }else{
-
+                console.log(`${back.api.baseURL}/api/product/${id}`)
                 await axios.post(`${back.api.baseURL}/api/product/${id}`, formData, 
+                
                 
                 {
                     headers:{'x-auth-token': token}
