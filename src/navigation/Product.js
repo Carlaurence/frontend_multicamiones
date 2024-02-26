@@ -212,7 +212,7 @@ const Product = () => {//AQUI SE CREA UN PRODUCTO NUEVO CON SU RESPECTIVO ID DE 
         createProductAxios();
     }
 
-    /**CREAR PRODUCTO*/
+    /**CREAR PRODUCTO**/
     const createProductAxios = async() => {
  
         if(!product.make){
