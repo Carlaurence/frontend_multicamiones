@@ -251,15 +251,12 @@ const Product = () => {//AQUI SE CREA UN PRODUCTO NUEVO CON SU RESPECTIVO ID DE 
             }else{
 
                 await axios.post(`${back.api.baseURL}/api/product/${id}`, formData, 
+                
                 {
-                    headers:{'x-auth-token': token},
-
-                    onUploadProgress: (event) => {
-                        //console.log(event.loaded, event.total)
-                    } 
+                    headers:{'x-auth-token': token}
                 })
                 .then(response => {
-                    //console.log(response)//EL OBJETO QUE RETORNA AXIOS 
+                    console.log(response)//EL OBJETO QUE RETORNA AXIOS 
                     if(response.data.message==="jwt expired"){
                         swal("ERROR", "ERROR: Accion Invalida\nEl Token ha expirado\nVuelva a loguearse!", "error");
                         localStorage.removeItem('token');
@@ -306,6 +303,7 @@ const Product = () => {//AQUI SE CREA UN PRODUCTO NUEVO CON SU RESPECTIVO ID DE 
                         }
                     }
                 }).catch(error => {
+                    console.log(error)
                     swal("ERROR", 'Error try/catch Axios: ' + error, "error");
                     setVisibility(false)// Visibility = FALSE => DESAPARECE LA VENTANA MODAL LOADING SPINNER
                 })
