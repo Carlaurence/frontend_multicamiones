@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";//SE DEBE UTILIZAR PARA RE-DIRECC
 
 /*RECIBE COMO (ARG) A LA FUNCION leftSlider() QUE VIENE DE <NAVAR> PARA QUE SE EJECUTE CADA VEZ QUE SE HAGA 
 CLICK SOBRE EL BOTON [Icon_ShowTrucksByCategory]*/
-const ShowTrucksByCategory = ({ category }) => {
+const ShowTrucksByCategory = ({ category, retractSlideMenu }) => {
 
     const { image, name, _id } = category;
 
     const navigate = useNavigate() //SE DEBE UTILIZAR PARA RE-DIRECCIONAR PAGINAS WEB
 
     const buttomHandler = () => {
+        retractSlideMenu();//LA FUNCION leftSlider() SE EJECUTA EN EL COMPONENTE PADRE <NAVAR> Y ESTA SE ENCARGA DE QUE EL SUBMENU "CATEGORIAS" SE ESCONDA HACIA LA IZQUIERDA CON UN 'left-[-100%]' 
         navigate(`/category/${_id}`);
     }
 

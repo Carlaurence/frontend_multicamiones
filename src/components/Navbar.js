@@ -31,11 +31,10 @@ const Navbar = () => {
         setCategory(response.category);
     }
 
-    /*const leftSlider = (e) => {
+    const retractSlideMenu = () => {
         const navTrucks = document.querySelector('.nav-trucks')//navTrucks llama al <div id='nav-trucks'> que deseamos manipular
-        //e.preventDefault();//impedir que se recargue automaticamente
         navTrucks.classList.toggle('left-[-100%]');//Isertamos o manipulamos las propiedades del <div id='nav-trucks'>
-    }*/
+    }
 
     useEffect(() => {//PARA QUE SE EJECUTE AUTOMATICAMENTE AL INGRESAR AL MODULO Category Y SE PRINTEEN LAS CATEGORIES
         getCategories();
@@ -80,15 +79,15 @@ const Navbar = () => {
 
                         {/*Este <div> Contiene [All Categories] */}
                         <div className="flex flex-col justify-center items-center gap-2 h-[220px]">
-                            <div className="bg-red-600 flex justify-center items-center rounded-full border-2 border-white text-white text-sm w-[80px] h-[80px] cursor-pointer shadow-lg shadow-red-600 hover:scale-105 hover:text-opacity-50 active:text-gray-700 underline font-bold" onClick={() => getProducts("All")}>Todos</div>
-                            <div onClick={() => getProducts("All")} style={{ backgroundImage: `url(https://res.cloudinary.com/depcjbb7q/image/upload/v1686534852/Categoria_Multimarcas_xmtzaz.png)` }} className='w-52 h-28 rounded-2xl bg-cover border border-black cursor-pointer shadow-lg shadow-red-600 hover:scale-105 opacity-60 hover:opacity-100'></div>
+                            <div onClick={() => {getProducts("All"); retractSlideMenu()}} className="bg-red-600 flex justify-center items-center rounded-full border-2 border-white text-white text-sm w-[80px] h-[80px] cursor-pointer shadow-lg shadow-red-600 hover:scale-105 hover:text-opacity-50 active:text-gray-700 underline font-bold">Todos</div>
+                            <div onClick={() => {getProducts("All"); retractSlideMenu()}} style={{ backgroundImage: `url(https://res.cloudinary.com/depcjbb7q/image/upload/v1686534852/Categoria_Multimarcas_xmtzaz.png)` }} className='w-52 h-28 rounded-2xl bg-cover border border-black cursor-pointer shadow-lg shadow-red-600 hover:scale-105 opacity-60 hover:opacity-100'></div>
                         </div>
 
                         {/*Este <div> Contiene [3.5Categories 7TonCategories 10TonCategories] */}
                         <div className="flex justify-around items-center gap-2 h-[220px]">
                             {
                                 category.map((itemCategory, index) => (
-                                    <IconTrucksByCategories key={itemCategory._id} category={itemCategory} />
+                                    <IconTrucksByCategories key={itemCategory._id} category={itemCategory} retractSlideMenu={retractSlideMenu} />
                                 ))
                             }
                         </div>
