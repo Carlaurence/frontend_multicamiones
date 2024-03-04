@@ -12,6 +12,7 @@ import back from "../backEndConnection/back";
 const Advertisements = () => {
 
     const navigate = useNavigate();
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
 
     useEffect(() => {
 
@@ -32,6 +33,11 @@ const Advertisements = () => {
             }
         }
         getUserAuthenticated();
+
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+        });
         //NOTA IMPORTANTE: TIPOS DE ERROR DEL JSONWEBTOKEN
         //1- {name: 'JsonWebTokenError', message: 'invalid signature'}
         //2- {name: 'JsonWebTokenError', message: 'jwt malformed'}
@@ -79,7 +85,7 @@ const Advertisements = () => {
                 swal("ACCION INVALIDA", "No hay token\nVuelva a loguearse ", "error");
                 navigate("/")
             } else {
-                await axios.post(`${back.api.baseURL}api/advertisements`, formData,
+                await axios.post(`${back.api.baseURL}/api/advertisements`, formData,
                     {
                         headers: { 'x-auth-token': token },
                     })
@@ -97,7 +103,7 @@ const Advertisements = () => {
                             localStorage.removeItem('token');
                             navigate("/");
                         } else {
-                            swal("BIEN HECHO!", "Las Imagenes se actualizaron exitosamente!", "success");
+                            swal("BIEN HECHO!", "La publicidad fue creada con exito!", "success");
                             setVisibility(false)// Visibility = FALSE => DESAPARECE LA VENTANA MODAL LOADING SPINNER
                             navigate('/advertisement_list');
                         }
@@ -122,7 +128,7 @@ const Advertisements = () => {
 
     return (
 
-        <div className="overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white">
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({ top: 0 }) : ''}`}>
             <Navbar />
             <div className="flex flex-row min-h-screen w-screen">
                 <Sidebar />

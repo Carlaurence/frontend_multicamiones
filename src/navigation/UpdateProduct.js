@@ -14,7 +14,8 @@ const UpdateProduct = () => {
     const { id } = useParams();
     const subtitle = {"make": "Marca", "model": "Modelo", "year": "Año", "odometer": "Kilometraje", "engineManufacturer": "Fabricante Motor", "gvwr": "Capacidad Carga", "cargoBodyType": "Tipo De Carroceria", "length": "Largo", "width": "Ancho", "height": "Altura", "price": "Precio", "images": "Fotos Vehiculo", "deleteImages": "Eliminar Imagenes Seleccionadas" }
 
-    
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
+
     useEffect(()=>{
 
         const getUserAuthenticated = async () => {
@@ -40,6 +41,14 @@ const UpdateProduct = () => {
         }
         /**CADA QUE SE ACTIVE EL NAVIGATE, AQUI SE EJECUTAN LAS FUNCIONES EN ORDEN*/
         getUserAuthenticated();
+
+        setIsTop(true)//CADA QUE SE EJECUTE UN RELOAD, DEBE LLEVAR LA VENTANA AL TOP:0
+
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+        });
+
         getProductById();
         getImages();
         getYears();
@@ -189,10 +198,10 @@ const UpdateProduct = () => {
     }
 
     return (
-        <div className={`overflow-hidden`}>
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({ top: 0 }) : ''}`}>
             <Navbar />
             {/*AQUI ORGANIZAMOS EL DIV PARA QUE LA PANTALLA SE DIVIDA EN DOS, A LA IZQ EL SIDBAR Y A LA DERECHA EL FORMULARIO*/}
-            <div className="flex flex-row min-h-screen w-screen bg-gradient-to-r from-black via-gray-400 to to-white">
+            <div className="flex flex-row min-h-screen w-screen">
                 <Sidebar />
 
                 {/*PANTALLA MD: Y LG:*/}

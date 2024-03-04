@@ -62,6 +62,8 @@ const Product = () => {//AQUI SE CREA UN PRODUCTO NUEVO CON SU RESPECTIVO ID DE 
      * 4- ESTAS MULTIPLES FUNCIONES RETORNAN UN OBJETO CADA UNA CON LA INFO TRAIDA DE LA BBDD ************
      * 5- LA INFORMACION DE CADA OBJETO RETORNADO SE USA PARA SETEAR LAS OPCIONES PREDEFINIDAS DE SELECCION DEL USUARIO *
      ****************************************************************************************************/
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
+    
     useEffect(()=>{
 
         const getUserAuthenticated = async () => {
@@ -77,17 +79,26 @@ const Product = () => {//AQUI SE CREA UN PRODUCTO NUEVO CON SU RESPECTIVO ID DE 
                  CON key "user" Y VALUE {_id:"xxxx", name:"Mxxxx", lastname:"Cxxxxx", email: "xxx@gmail.com"}*/
                 if (response.user) {
 
-                    /**PERMITE EL ACCESO Y EL PASO A LA SIGUIENTE FUNCION getCategory()*/
+                    /**PERMITE EL ACCESO Y EL PASO A LA SIGUIENTE FUNCION*/
                     
                 } else {//SI NO RETORNA EL USER, ENTONCES ACCESO DENEGADO
                     swal("ERROR", " Acceso Denegado \nUsuario Sin Loguear ", "error");
                     localStorage.removeItem('token');
-                    console.log(response)
+                    //console.log(response)
                     navigate("/");
                 }
             }
         }
+
         getUserAuthenticated();
+        
+        setIsTop(true)//CADA QUE SE EJECUTE UN RELOAD, DEBE LLEVAR LA VENTANA AL TOP:0
+
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+        });
+
         getCategory();//TRAE EL NOMBRE DE LA CATEGORIA MEDIANTE EL ID, PARA PINTARLO EN EL TITULO
         getManufacturers();//TRAE TODAS LAS MARCAS PARA SU PRE-SELECCION
         getAllEngineManufacturers();//TRAE TODOS LOS FABRICANTES DE MOTOR PARA SU PRE-SELECCION 
@@ -249,7 +260,7 @@ const Product = () => {//AQUI SE CREA UN PRODUCTO NUEVO CON SU RESPECTIVO ID DE 
                 swal("ERROR", "Accion Invalida\nNo hay token\nVuelva a loguearse ", "error");
                 navigate("/")
             }else{
-                console.log(`${back.api.baseURL}/api/product/${id}`)
+                //console.log(`${back.api.baseURL}/api/product/${id}`)
                 await axios.post(`${back.api.baseURL}/api/product/${id}`, formData, 
                 
                 
@@ -331,7 +342,7 @@ const Product = () => {//AQUI SE CREA UN PRODUCTO NUEVO CON SU RESPECTIVO ID DE 
     }
     
     return (
-        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white`}>
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({ top: 0 }) : ''}`}>
             <Navbar />
             {/*AQUI ORGANIZAMOS EL DIV PARA QUE LA PANTALLA SE DIVIDA EN DOS, A LA IZQ EL SIDBAR Y A LA DERECHA EL FORMULARIO*/}
             <div className="flex flex-row min-h-screen w-screen ">

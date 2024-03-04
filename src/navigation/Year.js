@@ -37,8 +37,16 @@ const Year = () => {
      * 2- SE EJECUTA EL useEffect() Y LA FUNCION getAllYears=> *******************************************
      * 3- LA FUNCION getAllYears() TRAE TODOS LOS AÑOS EXISTENTES Y LOS PONE EN EL SELECT ****************
      ****************************************************************************************************/
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
+
     useEffect(() => {//AL ACCEDER AL ADMIN "/" AUTOMATICAMENTE SE EJECUTA ESTE USEEFECT
         getUserAuthenticated();//EJECUTA EL FILTRO DE SEGURIDAD 
+
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+        });
+
         getAllYears();
     }, [navigate])//[navigate] SINTAXIS PARA QUE useEffect SE EJECUTE UNICAMENTE AL DETECTAR UN CAMBIO EN EL navigate 
 
@@ -166,10 +174,10 @@ const Year = () => {
     }
 
     return (
-        <div className="overflow-hidden">
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({ top: 0 }) : ''}`}>
             <Navbar />
             {/*AQUI ORGANIZAMOS EL DIV PARA QUE LA PANTALLA SE DIVIDA EN DOS, A LA IZQ EL SIDBAR Y A LA DERECHA EL FORMULARIO*/}
-            <div className="flex flex-row min-h-screen w-screen bg-gradient-to-r from-black via-gray-400 to to-white">
+            <div className="flex flex-row min-h-screen w-screen">
                 <Sidebar />
                     
                 {/*PANTALLA MD: Y LG:*/}

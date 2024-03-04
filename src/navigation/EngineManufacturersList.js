@@ -13,6 +13,7 @@ import { BiEdit, BiFemaleSign } from "react-icons/bi";
 const EngineManufacturerslist = () => {
 
     const navigate = useNavigate();
+    const [reload, setReload] = useState(false)//PARA REFRESCAR LA PAGINA
 
     const getUserAuthenticated = async () => {//FILTRO DE SEGURIDAD PARA ACCEDER A URL'S PROTEGIDAS
         const token = localStorage.getItem('token');
@@ -35,11 +36,25 @@ const EngineManufacturerslist = () => {
      * 2- SE EJECUTA EL FILTRO DE SEGURIDAD Y EL REQUEST getAllEngineManufacturers ***********************
      * 3- AL EJECUTARSE getAllEngineManufacturers, TRAEMOS LOS OBJ's DE LA BBDD Y SETEAMOS engineManufacturers **
      * 4- engineManufacturers SE UTILIZARA CON UN .map PARA PINTAR TODOS LOS FABRICANTES DISPONIBLES *****
+     * 5- LA VARIABLE DE ESTADO isTop = true SE USA PARA QUE CADA QUE SE RENDERICE, INICIE EN TOP:0
      ****************************************************************************************************/
+    const [isTop, setIsTop] = useState(true)
+
     useEffect(() => {
+        
         getUserAuthenticated();//EJECUTA EL FILTRO DE SEGURIDAD 
-        getAllEngineManufacturers();//
-    }, [navigate])//[navigate] SINTAXIS PARA QUE useEffect SE EJECUTE UNICAMENTE AL DETECTAR UN CAMBIO EN EL navigate
+        setReload(false);//CUANDO SE CREA EL PRODUCTO TENEMOS QUE DEVOLVER A reload A SU ESTADO (false)
+
+        setIsTop(true)//AL ELIMINAR UNA CargoBoryType SE EJECUTA EL reload Y A SU VEZ EL useEffect, ENTONCES DEBEMOS SETEAR isTop = true PARA QUE VUELVA AL TOP:0
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+        });
+
+        getAllEngineManufacturers();
+
+    }, [navigate, reload])//[navigate] SINTAXIS PARA QUE useEffect SE EJECUTE UNICAMENTE AL DETECTAR UN CAMBIO EN EL navigate
+    
     const [engineManufacturers, setEngineManufacturers] = useState([]);
 
     const getAllEngineManufacturers = async () => {
@@ -68,7 +83,7 @@ const EngineManufacturerslist = () => {
             return swal("ERROR", "Error de Try / Catch!", "error");
         }else {
             swal("HECHO!", "El nombre del fabricante fue borrado!", "success");
-            navigate('/admin')
+            setReload(true)
         }
     }
 
@@ -94,10 +109,10 @@ const EngineManufacturerslist = () => {
      ****************************************************************************************************/
 
     return (
-        <div className="overflow-hidden">
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({ top: 0 }) : ''}`}>
             <Navbar />
             {/*AQUI ORGANIZAMOS EL DIV PARA QUE LA PANTALLA SE DIVIDA EN DOS, A LA IZQ EL SIDBAR Y A LA DERECHA EL FORMULARIO*/}
-            <div className="flex flex-row min-h-screen w-screen bg-gradient-to-r from-black via-gray-400 to to-white">
+            <div className="flex flex-row min-h-screen w-screen">
                 <Sidebar />
                     
                 {/*PANTALLA MD: Y LG:*/}

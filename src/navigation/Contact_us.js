@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -40,8 +40,16 @@ const Contact_us = () => {
 
     //const onChange = () => {}
 
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
+    useEffect(() => {
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+          setIsTop(window.scrollY === 0);
+        });
+      }, []);
+
     return (
-        <div className="overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white">
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({top:0}) : ''}`}>
             <Navbar />
             <div className="flex justify-center md:min-h-screen mt-[110px] bg-cover" style={{ backgroundImage: "url(" + bgImage + ")" }}>
 

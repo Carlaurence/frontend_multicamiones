@@ -9,12 +9,18 @@ import imgFondo_Home from '../assets/images/Fondo_Home.jpg'
 import imgCategory from '../assets/images/Image_Category.png'
 
 
+
 const Home = () => {
 
     const [leftToRight, setLeftToRight] = useState(false);
     const [upToDown, setUpToDown] = useState(false);
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0 
 
     useEffect(() => {
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);//false
+          });
         setLeftToRight(true);
         setUpToDown(true);
         getCategories();
@@ -42,8 +48,19 @@ const Home = () => {
         setAdvertisements(response.msg);
     }
 
+    const retractSlideMenu = () => {
+        /**
+         * ESTA FUNCION SE EJECUTA VACIA PORQUE NO TIENE NINGUNA FUNCIONALIDA
+         * EN ESTE MODULO "/HOME", PERO ES REQUERIDA EN EL COMPONENTE
+         * HIJO <Icon_ShowTruckByCategory>, EL CUAL SE UTILIZA TAMBIEN
+         * PARA EL <DIV> DESLIZANTE DEL ICON 'CAMIONES' DEL NAVBAR Y 
+         * ALLI SI SE REQUERE UNA FUNCION DE left-[-100%] PARA QUE CADA
+         * VEZ QUE SE DE CLICK EN UNA CATEGORIA, EL DIV SE CONTRAIGA.
+         */
+    }
+
     return (
-        <div className="overflow-hidden flex flex-col bg-gradient-to-r from-black via-gray-400 to to-white">
+        <div className={`overflow-hidden flex flex-col bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({top:0}) : ''}`}>
 
             <Navbar />
 
@@ -83,7 +100,7 @@ const Home = () => {
                         
                         {
                             category.map((itemCategory, index) => (
-                                <IconTrucksByCategories key={itemCategory._id} category={itemCategory} />
+                                <IconTrucksByCategories key={itemCategory._id} category={itemCategory} retractSlideMenu={retractSlideMenu} />
                             ))
                         }
                         

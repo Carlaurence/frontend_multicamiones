@@ -14,43 +14,51 @@ const Admin = () => {
 
     const [userName, setUserName] = useState();
     const [userLastName, setUserLastName] = useState();
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
 
-    const getUserAuthenticated = async () => {//ESTE ES UN FILTRO DE SEGURIDAD MAS ESTRICTO PARA ACCEDER AL MODULO /ADMIN
+    useEffect(()=>{
 
-        const token = localStorage.getItem('token');//IR A localStorage Y TRAER VALUE: DE {KEY 'token'}
+        const getUserAuthenticated = async () => {
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                swal("ERROR", " Acceso Denegado \nNo hay token ", "error");
+                navigate("/")
+            } else {//SI HAY TOKEN, EJECUTE EL MICROSERVICIO
+                const response = await crud.GET(`/api/login`);//VIAJA AL LOCALSTORAGE(HEADER) Y LEE TOKEN ALMACENADO
+    
+                /*SI EL TOKEN ES VALIDO, EL "response" NOS DEBE RETORNA LA INFORMACION DEL USUARIO EN UN JSON
+                 CON key "user" Y VALUE {_id:"xxxx", name:"Mxxxx", lastname:"Cxxxxx", email: "xxx@gmail.com"}*/
+                if (response.user) {
 
-        //PRIMER FILTRO #1
-        if (!token) {//SI NO HAY TOKEN, IMPEDIR ACCESO Y RE-DIRECCIONAR AL HOME "/"
-            swal("ERROR", " Acceso Denegado \nUsuario Sin Loguear ", "error");
-            navigate("/")
-        } else {//SI HAY TOKEN, EJECUTE EL MICROSERVICIO
-            const response = await crud.GET(`/api/login`);//VIAJA AL LOCALSTORAGE(HEADER) Y LEE TOKEN ALMACENADO
+                    setUserName(response.user.name)//SETTEAMOS [userName] UNICAMENTE CON EL VALOR name: DEL RESPONSE RETORNADO {user : {}}
+                    setUserLastName(response.user.lastname)//SETTEAMOS [userLastName] CON EL VALOR lastname: DEL RESPONSE RETORNADO {user : {}}
 
-            /*SI EL TOKEN ES VALIDO, EL "response" NOS DEBE RETORNA LA INFORMACION DEL USUARIO EN UN JSON
-             CON key "user" Y VALUE {_id:"xxxx", name:"Mxxxx", lastname:"Cxxxxx", email: "xxx@gmail.com"}*/
-            if (response.user) {//SI EL USER ES TRUE, ENTONCES SE PERMITE EL ACCESO AL MODULO "/ADMIN"
-                setUserName(response.user.name)//SETTEAMOS [userName] UNICAMENTE CON EL VALOR name: DEL RESPONSE RETORNADO {user : {}}
-                setUserLastName(response.user.lastname)//SETTEAMOS [userLastName] CON EL VALOR lastname: DEL RESPONSE RETORNADO {user : {}}
-            } else {//SI NO RETORNA EL USER, ENTONCES ACCESO DENEGADO
-                swal("ERROR", " Acceso Denegado \nUsuario Sin Loguear ", "error");
-                localStorage.removeItem('token');
-                navigate("/");
+                    //NOTA IMPORTANTE: TIPOS DE ERROR DEL JSONWEBTOKEN
+                    //1- {name: 'JsonWebTokenError', message: 'invalid signature'}
+                    //2- {name: 'JsonWebTokenError', message: 'jwt malformed'}
+                    //3- {name: 'TokenExpiredError', message: 'jwt expired', expiredAt: '2023-07-23T07:54:29.000Z'}  
+                    //4- {msg: 'no hay token'}
+                    
+                } else {//SI NO RETORNA EL USER, ENTONCES ACCESO DENEGADO
+                    swal("ERROR", " Acceso Denegado \nUsuario Sin Loguear ", "error");
+                    localStorage.removeItem('token');
+                    console.log(response)
+                    navigate("/");
+                }
             }
-
-            //NOTA IMPORTANTE: TIPOS DE ERROR DEL JSONWEBTOKEN
-            //1- {name: 'JsonWebTokenError', message: 'invalid signature'}
-            //2- {name: 'JsonWebTokenError', message: 'jwt malformed'}
-            //3- {name: 'TokenExpiredError', message: 'jwt expired', expiredAt: '2023-07-23T07:54:29.000Z'}  
-            //4- {msg: 'no hay token'}      
         }
-    }
+        getUserAuthenticated();
 
-    useEffect(() => {//AL ACCEDER AL ADMIN "/" AUTOMATICAMENTE SE EJECUTA ESTE USEEFECT
-        getUserAuthenticated();//EJECUTA EL FILTRO DE SEGURIDAD 
-    }, [navigate])//[navigate] SINTAXIS PARA QUE useEffect SE EJECUTE UNICAMENTE AL DETECTAR UN CAMBIO EN EL navigate 
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+          });
+
+    }, [navigate])
 
     return (
-        <div className="overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white">
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({top:0}) : ''}`}>
             <Navbar />
             <div className="flex flex-row min-h-screen w-screen bg-cover" style={{backgroundImage: "url("+ bgImage +")" }}>
                 <Sidebar />

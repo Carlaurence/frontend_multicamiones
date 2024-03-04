@@ -13,6 +13,7 @@ import { BiEdit, BiFemaleSign } from "react-icons/bi";
 const Manufacturerslist = () => {
 
     const navigate = useNavigate();
+    const [reload, setReload] = useState(false)//PARA REFRESCAR LA PAGINA
 
     const getUserAuthenticated = async () => {//FILTRO DE SEGURIDAD PARA ACCEDER A URL'S PROTEGIDAS
         const token = localStorage.getItem('token');
@@ -36,10 +37,21 @@ const Manufacturerslist = () => {
      * 3- AL EJECUTARSE getAllManufacturers, TRAEMOS LOS OBJ's DE LA BBDD Y SETEAMOS manufacturers *******
      * 4- EL useState [manufacturers] SE UTILIZA CON UN .map PARA PINTAR TODOS LOS FAB. DISPONIBLES ******
      ****************************************************************************************************/
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
+
     useEffect(() => {
         getUserAuthenticated();//EJECUTA EL FILTRO DE SEGURIDAD 
+        setReload(false);//CUANDO SE CREA EL PRODUCTO TENEMOS QUE DEVOLVER A reload A SU ESTADO (false)
+
+        setIsTop(true)//AL ELIMINAR UNA CargoBoryType SE EJECUTA EL reload Y A SU VEZ EL useEffect, ENTONCES DEBEMOS SETEAR isTop = true PARA QUE VUELVA AL TOP:0
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+        });
+
         getAllManufacturers();//
-    }, [navigate])//[navigate] SINTAXIS PARA QUE useEffect SE EJECUTE UNICAMENTE AL DETECTAR UN CAMBIO EN EL navigate
+    }, [navigate, reload])//[navigate] SINTAXIS PARA QUE useEffect SE EJECUTE UNICAMENTE AL DETECTAR UN CAMBIO EN EL navigate
+    
     const [manufacturers, setManufacturers] = useState([]);
 
     const getAllManufacturers = async () => {
@@ -67,7 +79,7 @@ const Manufacturerslist = () => {
             return swal("ERROR", "Error de Try / Catch!", "error");
         } else {
             swal("HECHO!", "El nombre del fabricante fue borrado!", "success");
-            navigate('/admin')
+            setReload(true)
         }
     }
 
@@ -93,10 +105,10 @@ const Manufacturerslist = () => {
      ****************************************************************************************************/
 
     return (
-        <div className="overflow-hidden">
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({ top: 0 }) : ''}`}>
             <Navbar />
             {/*AQUI ORGANIZAMOS EL DIV PARA QUE LA PANTALLA SE DIVIDA EN DOS, A LA IZQ EL SIDBAR Y A LA DERECHA EL FORMULARIO*/}
-            <div className="flex flex-row min-h-screen w-screen bg-gradient-to-r from-black via-gray-400 to to-white">
+            <div className="flex flex-row min-h-screen w-screen">
                 <Sidebar />
                     
                 {/*PANTALLA MD: Y LG:*/}

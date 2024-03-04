@@ -35,9 +35,18 @@ const UpdateEngineManufacturer = () => {
      * 3- PARA TRAER LA INFORMACION PRECISA DEL getEngineManufacturerById, UTILIZAMOS EL ID DEL useParams() **
      * 4- AL EJECUTARSE getEngineManufacturerById, TRAEMOS LOS OBJ's DE LA BBDD Y SETEAMOS engineManufacturer **
      * 5- EL OBJETO engineManufacturer SE UTILIZARA EN EL RENDER PARA PINTAR EN NOMBRE DEL FABRICANTE ****
+     * 6- LA VARIABLE DE ESTADO isTop = true SE USA PARA QUE CADA QUE SE RENDERICE, INICIE EN TOP:0
      ****************************************************************************************************/
+    const [isTop, setIsTop] = useState(true)
+    
     useEffect(() => {
         getUserAuthenticated();
+
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+        });
+        
         getEngineManufacturerById();
     }, [navigate])
 
@@ -123,10 +132,10 @@ const UpdateEngineManufacturer = () => {
     }
 
     return (
-        <div className="overflow-hidden">
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({ top: 0 }) : ''}`}>
             <Navbar />
             {/*AQUI ORGANIZAMOS EL DIV PARA QUE LA PANTALLA SE DIVIDA EN DOS, A LA IZQ EL SIDBAR Y A LA DERECHA EL FORMULARIO*/}
-            <div className="flex flex-row min-h-screen w-screen bg-gradient-to-r from-black via-gray-400 to to-white">
+            <div className="flex flex-row min-h-screen w-screen">
                 <Sidebar />
 
                 {/*PANTALLA MD: Y LG:*/}

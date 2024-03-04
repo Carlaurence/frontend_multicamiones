@@ -21,6 +21,7 @@ import { BiEdit } from "react-icons/bi";
 const ModelsList = () => {
 
     const navigate = useNavigate();
+    const [reload, setReload] = useState(false)//PARA REFRESCAR LA PAGINA
 
     const getUserAuthenticated = async () => {//FILTRO DE SEGURIDAD PARA ACCEDER ACCEDER A URL'S PROTEGIDAS "/products"
         const token = localStorage.getItem('token');//IR A localStorage Y TRAER VALUE: DE {KEY 'token'}
@@ -55,10 +56,20 @@ const ModelsList = () => {
         setManufacturers(response.msg)
     }
 
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
+
     useEffect(() => {
         getUserAuthenticated();//EJECUTA EL FILTRO DE SEGURIDAD 
+        setReload(false);//CUANDO SE CREA EL PRODUCTO TENEMOS QUE DEVOLVER A reload A SU ESTADO (false)
+
+        setIsTop(true)//AL ELIMINAR UNA CargoBoryType SE EJECUTA EL reload Y A SU VEZ EL useEffect, ENTONCES DEBEMOS SETEAR isTop = true PARA QUE VUELVA AL TOP:0
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+        });
+
         getManufacturers();//EJECUTA EL REQUEST PARA TRAER TODAS LAS MARCAS QUE EXISTAN EN NUESTRA BBDD
-    }, [navigate])//[navigate] 
+    }, [navigate, reload])//[navigate] 
 
     /*SEGUNDA PARTE: *************************************************************************************
      * 1- SE EJECUTA EL getManufacturerById(id) PARA TRAER LA INFO DEL FABRICANTE PRE-SELECCIONADO *******
@@ -89,7 +100,7 @@ const ModelsList = () => {
         position: ''
     });
 
-    console.log(dataUpdateModel)
+    //console.log(dataUpdateModel)
 
     const onChangeManufacturer = (e) => {//ESTE onChangeManufacturer SE EJECUTA CUANDO SELECCIONAMOS UN FABRICANTE
 
@@ -127,10 +138,10 @@ const ModelsList = () => {
             updatedModel: dataUpdateModel.updatedModel.toUpperCase(),
             position: dataUpdateModel.position
         }
-        console.log(data)
+        //console.log(data)
 
         const response = await crud.PUT(`/api/manufacturer/update_model`, data)
-        console.log(response.msg)
+        //console.log(response.msg)
 
         if (response.msg === "ERROR: data incompleta") {
             swal("ERROR", "Accion Invalida! \nData Requerida Incompleta", "error");
@@ -140,7 +151,18 @@ const ModelsList = () => {
             swal("ERROR", "Accion Invalida! \nSe Presento Un Error De Try / Catch", "error");
         }else {
             swal("BIEN HECHO!", "El Modelo Se actualizado exitosamente!", "success");
-            navigate(`/create_model`);
+            
+            //LIMPIAMOS LA DATA DE LOS CAMPOS DEL OBJETO dataUpdateModel
+            Object.keys(dataUpdateModel).map(key => {
+                dataUpdateModel[key] = ''
+            })
+
+            console.log(dataUpdateModel)
+
+            document.getElementById('make').value = 'DefaultValue'
+            setModels([]);
+            setManufacturer(false);
+            setReload(true);
         }
     }
     /*QUINTA PARTE: ELIMINAR UN MODELO ******************************************************************
@@ -166,8 +188,11 @@ const ModelsList = () => {
         }else if(response.msn === "error de try / catch"){
             swal("ERROR", "Accion Invalida! \nSe Presento Un Error De Try / Catch", "error");
         }else {
-            swal("BIEN HECHO!", "El Modelo Se actualizado exitosamente!", "success");
-            navigate(`/create_model`);
+            swal("BIEN HECHO!", "El Modelo fue borrado!", "success");
+            document.getElementById('make').value = 'DefaultValue'
+            setModels([]);
+            setManufacturer(false);
+            setReload(true);
         }
 
     }
@@ -195,10 +220,10 @@ const ModelsList = () => {
     
 
     return (
-        <div className="overflow-hidden">
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({ top: 0 }) : ''}`}>
             <Navbar />
             {/*AQUI ORGANIZAMOS EL DIV PARA QUE LA PANTALLA SE DIVIDA EN DOS, A LA IZQ EL SIDBAR Y A LA DERECHA EL FORMULARIO*/}
-            <div className="flex flex-row min-h-screen w-screen bg-gradient-to-r from-black via-gray-400 to to-white">
+            <div className="flex flex-row min-h-screen w-screen">
                 <Sidebar />
                     
                 {/*PANTALLA MD: Y LG:*/}
@@ -265,7 +290,7 @@ const ModelsList = () => {
 
                                                 <div className="flex items-center gap-4">
                                                     {/*uneditable SE SETEA CON EL NUMERO DE INDEX/POSICION DONDE SE PRESS CLICK MEDIANTE*/}
-                                                    <BiEdit className="hover:opacity-50" onClick={() => { uneditable !== index ? setUneditable(index) : setUneditable(true); setDataUpdateModel({ ...dataUpdateModel, updatedModel: '', position: index, }) }} style={{ color: 'white', fontSize: '24px', cursor: "pointer" }} />
+                                                    <BiEdit className="hover:opacity-50" onClick={() => { uneditable !== index ? setUneditable(index) : setUneditable(true); setIsTop(true); setDataUpdateModel({ ...dataUpdateModel, updatedModel: '', position: index, }) }} style={{ color: 'white', fontSize: '24px', cursor: "pointer" }} />
                                                     <BsTrash className="hover:opacity-50" onClick={() => { warningDelete(index)}}  style={{ color: 'white', fontSize: '24px', cursor: "pointer" }} />
                                                 </div>
                                             </div>

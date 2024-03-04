@@ -31,7 +31,17 @@ const InfoProduct = () => {
         maximumFractionDigits: 0
     })
 
-    const [expand, setExpand] = useState(false)
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
+    useEffect(() => {
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+          setIsTop(window.scrollY === 0);
+        });
+
+        getTruck(id);
+        
+      }, [navigate]);
+
     const [truck, setTruck] = useState()
     const getTruck = async (id) => {
         const response = await crud.GET(`/api/product/idproduct/${id}`)
@@ -47,12 +57,8 @@ const InfoProduct = () => {
         } else { setFinancialCorps(response.msg) }
     }
 
-    useEffect(() => {
-        getTruck(id);
-    }, [navigate])
-
     return (
-        <div className="overflow-hidden flex flex-col bg-gradient-to-r from-black via-gray-400 to to-white">
+        <div className={`overflow-hidden flex flex-col bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({top:0}) : ''}`}>
             <Navbar />
 
             <div className="flex flex-col min-h-screen">

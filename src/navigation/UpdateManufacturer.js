@@ -31,6 +31,19 @@ const UpdateManufacturer = () => {
         }
     }
 
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
+
+    useEffect(() => {
+        getUserAuthenticated();
+
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+        });
+
+        getManufacturerById();
+    }, [navigate])
+
     const [manufacturer, setManufacturer] = useState([]);
     const [uneditable, setUneditable] = useState(true);
 
@@ -49,12 +62,7 @@ const UpdateManufacturer = () => {
             setManufacturer(response.msg);
             console.log(response.msg)
         }
-    }
-
-    useEffect(() => {
-        getUserAuthenticated();
-        getManufacturerById();
-    }, [navigate])
+    } 
 
     const [dataUpdateManufacturer, setDataUpdateManufacturer] = useState({
         make: ''
@@ -101,10 +109,10 @@ const UpdateManufacturer = () => {
     }
 
     return (
-        <div className="overflow-hidden">
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({ top: 0 }) : ''}`}>
             <Navbar />
             {/*AQUI ORGANIZAMOS EL DIV PARA QUE LA PANTALLA SE DIVIDA EN DOS, A LA IZQ EL SIDBAR Y A LA DERECHA EL FORMULARIO*/}
-            <div className="flex flex-row min-h-screen w-screen bg-gradient-to-r from-black via-gray-400 to to-white">
+            <div className="flex flex-row min-h-screen w-screen">
                 <Sidebar />
                     
                 {/*PANTALLA MD: Y LG:*/}

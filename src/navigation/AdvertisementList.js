@@ -14,7 +14,8 @@ const AdvertisementList = () => {
     const navigate = useNavigate();
     const [reload, setReload] = useState(false)
     const [visibility, setVisibility] = useState(false) //CONTROLA LA VENTANA MODAL 'LOADING-SPINNER'
-
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
+    
     useEffect(()=>{
 
         const getUserAuthenticated = async () => {
@@ -26,6 +27,7 @@ const AdvertisementList = () => {
                 const response = await crud.GET(`/api/login`);
                 if (response.user) {
                     /**PERMITE EL ACCESO Y EL PASO A LA SIGUIENTE FUNCION getUserAuthenticated()*/
+                    setReload(false);//CUANDO SE CREA EL PRODUCTO TENEMOS QUE DEVOLVER A reload A SU ESTADO (false)
                 } else {
                     swal("ERROR", " Acceso Denegado \nUsuario Sin Loguear ", "error");
                     localStorage.removeItem('token');
@@ -35,7 +37,13 @@ const AdvertisementList = () => {
             }
         }
         getUserAuthenticated();
-        setReload(false)
+
+        setIsTop(true)//AL ELIMINAR UNA CargoBoryType SE EJECUTA EL reload Y A SU VEZ EL useEffect, ENTONCES DEBEMOS SETEAR isTop = true PARA QUE VUELVA AL TOP:0
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+        });
+
         getAllAdvertisements();
     }, [navigate, reload])
 
@@ -88,7 +96,7 @@ const AdvertisementList = () => {
 
 
     return (
-        <div className="overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white">
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({ top: 0 }) : ''}`}>
             <Navbar />
             <div className="flex flex-row min-h-screen w-screen">
                 <Sidebar />

@@ -29,6 +29,8 @@ const TrucksList = () => {
     //FILTRO DE SEGURIDAD PARA ACCEDER ACCEDER A URL'S PROTEGIDAS "/trucks_list"
     //SE EJECUTA CON useEfeect()
 
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
+
     useEffect(()=>{
 
         const getUserAuthenticated = async () => {
@@ -42,18 +44,30 @@ const TrucksList = () => {
     
                 /*SI EL TOKEN ES VALIDO, EL "response" NOS DEBE RETORNA LA INFORMACION DEL USUARIO EN UN JSON
                  CON key "user" Y VALUE {_id:"xxxx", name:"Mxxxx", lastname:"Cxxxxx", email: "xxx@gmail.com"}*/
-                if (response.user) {//SI EL USER ES TRUE, ENTONCES SE PERMITE EL ACCESO AL MODULO "/ADMIN"
-                    //console.log(response.user)
-                    setReload(false)
-                    getAllTrucks();
+                if (response.user) {
+
+                    /**PERMITE EL ACCESO Y EL PASO A LA SIGUIENTE FUNCION*/
+                    
                 } else {//SI NO RETORNA EL USER, ENTONCES ACCESO DENEGADO
                     swal("ERROR", " Acceso Denegado \nUsuario Sin Loguear ", "error");
                     localStorage.removeItem('token');
+                    //console.log(response)
                     navigate("/");
                 }
             }
         }
+
         getUserAuthenticated();
+
+        setIsTop(true)//CADA QUE SE EJECUTE UN RELOAD, DEBE LLEVAR LA VENTANA AL TOP:0
+
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+        });
+
+        setReload(false)
+        getAllTrucks();
 
     }, [navigate, reload])
 
@@ -96,11 +110,11 @@ const TrucksList = () => {
     }
 
     return (
-        <div className={`overflow-hidden`}>
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({ top: 0 }) : ''}`}>
             <Navbar />
 
             {/*AQUI ORGANIZAMOS EL DIV PARA QUE LA PANTALLA SE DIVIDA EN DOS, A LA IZQ EL SIDBAR Y A LA DERECHA EL FORMULARIO*/}
-            <div className="flex flex-row min-h-screen w-screen bg-gradient-to-r from-black via-gray-400 to to-white">
+            <div className="flex flex-row min-h-screen w-screen">
                 <Sidebar />
                     
                 {/*PANTALLA MD: Y LG:*/}

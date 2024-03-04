@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import ButtomSingUp from "../components/Buttom_SignUp";
@@ -9,6 +9,14 @@ import Footer from "../components/Footer";
 const SignUp = () => {
 
     const navigate = useNavigate();
+
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
+    useEffect(() => {
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);
+        });
+    }, []);
 
     {/*EL HOOK useState({}) AL SER LLAMADO DENTRO DE LA FUNCION onChange = (e), SE ENCARGARA DE SETEAR LAS VARIABLES 
     [name, lastname, email, password y confirm] CON LOS VALORES TRAIDOS DESDE EL FRONT, MEDIANTE [e.target.name]: e.target.value*/}
@@ -75,101 +83,101 @@ const SignUp = () => {
     }
 
     return (
-        <>
-        <div className="overflow-hidden">
+
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({ top: 0 }) : ''}`}>
             <Navbar />
-            <div className="flex justify-center items-center min-h-screen w-screen bg-gradient-to-r from-black via-gray-400 to to-white">                
-                    
-                    {/*FORMULARIO*/}{/*PANTALLA MD: Y LG:*/}
-                    <div className="relative mt-36 mb-14 bg-white hidden md:flex justify-center items-center border border-black shadow-2xl shadow-red-600 w-[704px] p-3 rounded-xl">
-                        <div className="bg-red-600 w-full border border-white shadow-2xl shadow-black rounded-xl">
-                            <span className="mb-6 flex justify-center text-xl text-white pt-4 font-semibold uppercase">Crear Usuario</span>
+            <div className="flex justify-center items-center min-h-screen w-screen">
 
-                            <form onSubmit={onSubmit} className="flex flex-col justify-center items-center gap-3">
+                {/*FORMULARIO*/}{/*PANTALLA MD: Y LG:*/}
+                <div className="relative mt-36 mb-14 bg-white hidden md:flex justify-center items-center border border-black shadow-2xl shadow-red-600 w-[704px] p-3 rounded-xl">
+                    <div className="bg-red-600 w-full border border-white shadow-2xl shadow-black rounded-xl">
+                        <span className="mb-6 flex justify-center text-xl text-white pt-4 font-semibold uppercase">Crear Usuario</span>
 
-                                <div className="flex flex-row gap-5">
-                                    <div className="flex flex-col">
-                                        <label className=" text-white font-medium">Nombres</label>
-                                        <input className=" text-gray-700 py-2 px-12 rounded-xl leading-tight border border-black"
-                                            id="name"
-                                            type="text"
-                                            name="name"
-                                            placeholder="Ingrese Nombres"
-                                            value={name}
-                                            onChange={onChange}
-                                        ></input>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <label className=" text-white font-medium">Apellidos</label>
-                                        <input className=" text-gray-700 py-2 px-12 rounded-xl leading-tight border border-black"
-                                            id="lastname"
-                                            type="text"
-                                            name="lastname"
-                                            placeholder="Ingrese Apellidos"
-                                            value={lastname}
-                                            onChange={onChange}
-                                        ></input>
-                                    </div>
+                        <form onSubmit={onSubmit} className="flex flex-col justify-center items-center gap-3">
+
+                            <div className="flex flex-row gap-5">
+                                <div className="flex flex-col">
+                                    <label className=" text-white font-medium">Nombres</label>
+                                    <input className=" text-gray-700 py-2 px-12 rounded-xl leading-tight border border-black"
+                                        id="name"
+                                        type="text"
+                                        name="name"
+                                        placeholder="Ingrese Nombres"
+                                        value={name}
+                                        onChange={onChange}
+                                    ></input>
                                 </div>
-
-                                <div className="flex flex-row gap-5">
-                                    <div className="flex flex-col">
-                                        <label className=" text-white font-medium">Correo Electronico</label>
-                                        <input className=" text-gray-700 py-2 px-12 rounded-xl leading-tight border border-black"
-                                            id="email"
-                                            type="email"
-                                            name="email"
-                                            placeholder="username@email.com"
-                                            value={email}
-                                            onChange={onChange}
-                                        ></input>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <label className="text-white font-medium">Password</label>
-                                        <input className="text-gray-700 py-2 px-12 rounded-xl leading-tight border border-black"
-                                            id="password"
-                                            type="password"
-                                            name="password"
-                                            placeholder="***********************"
-                                            value={password}
-                                            onChange={onChange}
-                                        ></input>
-                                    </div>
+                                <div className="flex flex-col">
+                                    <label className=" text-white font-medium">Apellidos</label>
+                                    <input className=" text-gray-700 py-2 px-12 rounded-xl leading-tight border border-black"
+                                        id="lastname"
+                                        type="text"
+                                        name="lastname"
+                                        placeholder="Ingrese Apellidos"
+                                        value={lastname}
+                                        onChange={onChange}
+                                    ></input>
                                 </div>
+                            </div>
 
-                                <div className="flex flex-row gap-5 mb-2">
-                                    <div className="flex flex-col">
-                                        <label className="text-white font-medium">Confirmar Password</label>
-                                        <input className="text-gray-700 py-2 px-12 rounded-xl leading-tight border border-black"
-                                            id="confirm"
-                                            type="password"
-                                            name="confirm"
-                                            placeholder="***********************"
-                                            value={confirm}
-                                            onChange={onChange}
-                                        ></input>
-                                    </div>
-                                    <div className="pt-6">
-                                        <ButtomSingUp />
-                                    </div>
+                            <div className="flex flex-row gap-5">
+                                <div className="flex flex-col">
+                                    <label className=" text-white font-medium">Correo Electronico</label>
+                                    <input className=" text-gray-700 py-2 px-12 rounded-xl leading-tight border border-black"
+                                        id="email"
+                                        type="email"
+                                        name="email"
+                                        placeholder="username@email.com"
+                                        value={email}
+                                        onChange={onChange}
+                                    ></input>
                                 </div>
-
-                                <div className="flex flex-col font-normal justify-center items-center text-sm">
-                                    <Link className="text-white mb-1 underline hover:text-opacity-70 active:text-opacity-50" to={"/sign_in"}>Regresar a Inicio Sesion</Link>
+                                <div className="flex flex-col">
+                                    <label className="text-white font-medium">Password</label>
+                                    <input className="text-gray-700 py-2 px-12 rounded-xl leading-tight border border-black"
+                                        id="password"
+                                        type="password"
+                                        name="password"
+                                        placeholder="***********************"
+                                        value={password}
+                                        onChange={onChange}
+                                    ></input>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-                    {/*FIN FORMULARIO*/}{/*FIN PANTALLA MD: Y LG:*/}
+                            </div>
 
-                    {/*PANTALLA DISPOSITIVOS MOVILES*/}
-                    <div className="flex md:hidden w-full items-center justify-center mt-32 mb-14 font-bold uppercase">
-                        <span className="text-xl text-center">Modulo no permitido en dispositivos moviles</span>
+                            <div className="flex flex-row gap-5 mb-2">
+                                <div className="flex flex-col">
+                                    <label className="text-white font-medium">Confirmar Password</label>
+                                    <input className="text-gray-700 py-2 px-12 rounded-xl leading-tight border border-black"
+                                        id="confirm"
+                                        type="password"
+                                        name="confirm"
+                                        placeholder="***********************"
+                                        value={confirm}
+                                        onChange={onChange}
+                                    ></input>
+                                </div>
+                                <div className="pt-6">
+                                    <ButtomSingUp />
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col font-normal justify-center items-center text-sm">
+                                <Link className="text-white mb-1 underline hover:text-opacity-70 active:text-opacity-50" to={"/sign_in"}>Regresar a Inicio Sesion</Link>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <Footer />
+                {/*FIN FORMULARIO*/}{/*FIN PANTALLA MD: Y LG:*/}
+
+                {/*PANTALLA DISPOSITIVOS MOVILES*/}
+                <div className="flex md:hidden w-full items-center justify-center mt-32 mb-14 font-bold uppercase">
+                    <span className="text-xl text-center">Modulo no permitido en dispositivos moviles</span>
+                </div>
             </div>
-        </>
+            <Footer />
+        </div>
+
     )
 }
 

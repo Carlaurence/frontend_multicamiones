@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";//SE DEBE UTILIZAR PARA RE-DIRECCIONAR PAGINAS WEB
 
-/*RECIBE COMO (ARG) A LA FUNCION leftSlider() QUE VIENE DE <NAVAR> PARA QUE SE EJECUTE CADA VEZ QUE SE HAGA 
+/*RECIBE COMO (ARG) A LA FUNCION retractSlideMenu() QUE VIENE DE <NAVAR> PARA QUE SE EJECUTE CADA VEZ QUE SE HAGA 
 CLICK SOBRE EL BOTON [Icon_ShowTrucksByCategory]*/
 const ShowTrucksByCategory = ({ category, retractSlideMenu }) => {
 
@@ -10,7 +10,7 @@ const ShowTrucksByCategory = ({ category, retractSlideMenu }) => {
     const navigate = useNavigate() //SE DEBE UTILIZAR PARA RE-DIRECCIONAR PAGINAS WEB
 
     const buttomHandler = () => {
-        retractSlideMenu();//LA FUNCION leftSlider() SE EJECUTA EN EL COMPONENTE PADRE <NAVAR> Y ESTA SE ENCARGA DE QUE EL SUBMENU "CATEGORIAS" SE ESCONDA HACIA LA IZQUIERDA CON UN 'left-[-100%]' 
+        retractSlideMenu();//LA FUNCION retractSlideMenu() SE EJECUTA EN EL COMPONENTE PADRE <NAVAR> Y ESTA SE ENCARGA DE QUE EL SUBMENU "CATEGORIAS" SE ESCONDA HACIA LA IZQUIERDA CON UN 'left-[-100%]' 
         navigate(`/category/${_id}`);
     }
 

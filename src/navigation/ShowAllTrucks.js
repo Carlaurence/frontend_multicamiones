@@ -35,15 +35,20 @@ const ShowAllTrucks = () => {
 
     }
 
-    useEffect(() => {//PARA QUE SE EJECUTE AUTOMATICAMENTE AL INGRESAR AL MODULO Category Y SE PRINTEEN LAS CATEGORIES
+    const [isTop, setIsTop] = useState(true)
+
+    useEffect(() => {
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);//false
+          });
         getAllTrucks();
-    }, [])//[] QUE SE EJECUTA UNA SOLA VEZ
-    console.log(products)
+    }, [])
+    //console.log(products)
 
     /*NOTA IMPORTANTE: LAS IMAGENES DE LOS VEHICULOS DEBEN CONSERVAR UNA RELACION DE ASAPECTO DE 4:3
      */
     return (
-        <div className="overflow-hidden flex flex-col bg-gradient-to-r from-black via-gray-400 to to-white">
+        <div className={`overflow-hidden flex flex-col bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({top:0}) : ''}`}>
             <Navbar />
             
             <div className="mt-36 mb-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-center min-h-screen">

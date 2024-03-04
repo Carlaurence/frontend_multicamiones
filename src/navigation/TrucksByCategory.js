@@ -37,14 +37,25 @@ const ShowTrucksByCategory = () => {
         setProducts(response.msg);
     }
 
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
+
     useEffect(() => {//PARA QUE SE EJECUTE AUTOMATICAMENTE AL INGRESAR AL MODULO Category Y SE PRINTEEN LAS CATEGORIES
-        getTrucksByCategory();
+        
+        setIsTop(true)//CADA QUE CAMBIE EL ID SE TIENE QUE SETEAR true PARA QUE SE VAYA AL TOP:0
+        
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+            setIsTop(window.scrollY === 0);//false
+          });
+        
+          getTrucksByCategory();
+          
     }, [id])/*[] QUE SE EJECUTA UNA SOLA VEZ. PERO EN ESTE CASO [id], SE TIENE QUE EJECUTAR CADA QUE DETECTE UN CAMBIO
     EN EL /:id QUE LLEGA EN LA URL /category/:id POR MEDIO DEL LLAMADO QUE LE HACE EL BOTTOM Icon_ShowTrucksByCategory*/
 
     return (
         
-        <div className="overflow-hidden flex flex-col bg-gradient-to-r from-black via-gray-400 to to-white">
+        <div className={`overflow-hidden flex flex-col bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({top:0}) : ''}`}>
             <Navbar />
             
             <div className="mt-36 mb-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-center min-h-screen">

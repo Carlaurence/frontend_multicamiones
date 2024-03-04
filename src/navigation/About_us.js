@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import CarouselAboutUs from "../components/Carousel_AboutUs";
@@ -15,10 +15,17 @@ import { GiEyeTarget } from "react-icons/gi";
 const About_us = () => {
 
     const images = [Img_AboutUs1, Img_AboutUs2]
+    const [isTop, setIsTop] = useState(true)//SETEA [isTop === true] PARA QUE SE RENDERICE EN EL TOP:0
 
+    useEffect(() => {
+        //EVENTO OYENTE PARA QUE EL MOVERSE EL SCROLL SETE [isTop === false]
+        window.addEventListener('scroll', () => {
+          setIsTop(window.scrollY === 0);
+        });
+      }, []);
 
     return (
-        <div className="overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white">
+        <div className={`overflow-hidden bg-gradient-to-r from-black via-gray-400 to to-white ${isTop ? window.scrollTo({top:0}) : ''}`}>
             <Navbar />
 
             <div className="mt-[125px] grid grid-cols-1 md:grid-cols-2 p-4 bg-white md:bg-transparent">
